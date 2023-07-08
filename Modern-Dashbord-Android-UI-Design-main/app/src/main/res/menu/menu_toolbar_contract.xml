@@ -1,0 +1,7 @@
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Tài khoản"
+        android:id="@+id/toolbar_account"/>
+    <item android:title="Đăng xuất"
+        android:id="@+id/toolbar_logout"/>
+</menu>
