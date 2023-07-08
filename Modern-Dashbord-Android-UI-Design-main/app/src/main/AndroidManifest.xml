@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ModernDashbord"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".LeaveActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewPdfActivity"
             android:exported="false" />
         <activity

@@ -43,7 +43,7 @@ public class ViewPdfActivity extends AppCompatActivity {
         try {
             url = URLEncoder.encode(fileUrl,"UTF-8");
         }catch (Exception ex){
- 
+
         }
         webView.getSettings().setJavaScriptEnabled(true); // Bật JavaScript (cần thiết cho PDF.js)
         webView.loadUrl("https://docs.google.com/gview?embedded=true&url=" + url);
