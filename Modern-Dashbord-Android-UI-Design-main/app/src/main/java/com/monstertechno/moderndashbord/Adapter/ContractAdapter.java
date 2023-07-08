@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.monstertechno.moderndashbord.Api.ApiService;
 import com.monstertechno.moderndashbord.ContractActivity;
+import com.monstertechno.moderndashbord.ContractDetailActivity;
 import com.monstertechno.moderndashbord.Data.DataManager;
 import com.monstertechno.moderndashbord.LoginActivity;
 import com.monstertechno.moderndashbord.Model.Contract;
@@ -66,8 +67,8 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.Contra
         }
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(contract.endDate);
-        holder.tvNo.setText("No: "+No);
-        holder.tvName.setText("Mã hợp đông: "+contract.contractCode);
+        holder.tvNo.setText("STT: "+No);
+        holder.tvName.setText("Mã hợp đồng: "+contract.contractCode);
         holder.tvDate.setText("Ngày hết hạn: "+formattedDate);
         holder.btnStatus.setText(contract.status);
         if(contract.status.equals("Waiting")){
@@ -82,6 +83,12 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.Contra
         }
         holder.ivDetail.setImageResource(R.drawable.baseline_remove_red_eye_24);
         No++;
+        holder.ivDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClicked(contract);
+            }
+        });
     }
 
     @Override

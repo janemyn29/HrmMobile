@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<TempInfor> call, Throwable t) {
+
+                tvError.setText("Vui lòng kiểm tra lại kết nối Internet!");
             }
         });
     }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.monstertechno.moderndashbord.Model.Contract;
 import com.monstertechno.moderndashbord.Model.ContractList;
+import com.monstertechno.moderndashbord.Model.Enum;
 import com.monstertechno.moderndashbord.Model.LoginModel;
 import com.monstertechno.moderndashbord.Model.PagingContract;
 import com.monstertechno.moderndashbord.Model.TempInfor;
@@ -11,6 +12,7 @@ import com.monstertechno.moderndashbord.Model.TempInfor;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -36,4 +38,16 @@ public interface ApiService {
 
     @GET("Emp/GetListContract2")
     Call<PagingContract> ListContract(@Header("Authorization") String token, @Query("pg") int pg);
+
+    @GET("Emp/ContractDetail")
+    Call<Contract> ContractDetail(@Header("Authorization") String token, @Query("code")String code);
+
+    @GET("api/Enum/SalaryType")
+    Call<List<Enum>> SalaryType();
+
+    @GET("api/Enum/ContractType")
+    Call<List<Enum>> ContractType();
+
+    @GET("api/Enum/EmployeeContractStatus")
+    Call<List<Enum>> EmployeeContractStatus();
 }

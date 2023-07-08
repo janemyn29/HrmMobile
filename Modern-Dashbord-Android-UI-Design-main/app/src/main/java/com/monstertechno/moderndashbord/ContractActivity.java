@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.monstertechno.moderndashbord.Adapter.ContractAdapter;
 import com.monstertechno.moderndashbord.Adapter.PagingScrollListener;
@@ -56,7 +57,12 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         loadList();
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("Error");
+        if(data!=null && data.isEmpty()&& data.equals("") ){
+            Toast.makeText(this, data, Toast.LENGTH_LONG).show();
 
+        }
     }
 
 
@@ -84,20 +90,28 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
                                 Intent intent = new Intent(ContractActivity.this, LoginActivity.class);
                                 intent.putExtra("Error", "Phiên đăng nập đã hết hạn! Vui lòng đăng nhập lại!");
                                 startActivity(intent);
+                            }else{
+                                Intent intent = new Intent(ContractActivity.this, LoginActivity.class);
+                                intent.putExtra("Error", "Đã xảy ra lỗi trong quá trình xử lý!");
+                                startActivity(intent);
                             }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<PagingContract> call, Throwable t) {
-
+                        Intent intent = new Intent(ContractActivity.this, LoginActivity.class);
+                        intent.putExtra("Error", "Vui lòng kiểm tra lại kết nối Internet!");
+                        startActivity(intent);
                     }
                 });
     }
 
     @Override
     public void onItemClicked(Contract contract) {
-
+        Intent intent = new Intent(ContractActivity.this, ContractDetailActivity.class);
+        intent.putExtra("code", contract.contractCode);
+        startActivity(intent);
     }
 
     @Override
