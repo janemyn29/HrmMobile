@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.monstertechno.moderndashbord.Adapter.ContractAdapter;
 import com.monstertechno.moderndashbord.Adapter.PagingScrollListener;
 import com.monstertechno.moderndashbord.Api.ApiService;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 
 public class ContractActivity extends AppCompatActivity implements SelectListener {
     Toolbar toolbar;
+    private TabLayout tabLayout;
     DataManager dataManager = DataManager.getInstance();
     TempInfor data = dataManager.getTempInfor();
     String Token = "Bearer "+ data.getToken();
@@ -52,10 +54,43 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
         setSupportActionBar(toolbar);
         toolbar.setTitle("Danh Sách Hợp Đồng");
         recyclerView = findViewById(R.id.contract_rv);
+        tabLayout = findViewById(R.id.contract_tabLayout);
 
         adapter = new ContractAdapter(this, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                // Thực hiện chuyển đổi Activity dựa trên vị trí của TabItem
+                switch (position) {
+                    case 0:
+                        startActivity(new Intent(ContractActivity.this, MainActivity.class));
+                        break;
+                    case 1:
+                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        break;
+                    case 2:
+                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(ContractActivity.this, InforActivity.class));
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         loadList();
         Intent intent = getIntent();
         String data = intent.getStringExtra("Error");
@@ -63,6 +98,7 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
             Toast.makeText(this, data, Toast.LENGTH_LONG).show();
 
         }
+
     }
 
 

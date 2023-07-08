@@ -12,12 +12,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.tabs.TabLayout;
 import com.monstertechno.moderndashbord.Data.DataManager;
 import com.monstertechno.moderndashbord.Model.TempInfor;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
-
+    private TabLayout tabLayout;
     CardView cvContract;
     TextView tvFullname, tvRole;
     ShapeableImageView imgAvatar;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         tvRole = findViewById(R.id.main_tv_Role);
         imgAvatar = findViewById(R.id.main_img_avatar);
         cvContract = findViewById(R.id.main_cv_contract);
+        tabLayout = findViewById(R.id.main_tabLayout);
 
         tvRole.setText(data.getListRoles().get(0));
         tvFullname.setText(data.getFullName());
@@ -47,6 +49,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ContractActivity.class));
+            }
+        });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                // Thực hiện chuyển đổi Activity dựa trên vị trí của TabItem
+                switch (position) {
+                    case 0:
+                        break;
+                    case 1:
+                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        break;
+                    case 2:
+                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(MainActivity.this, InforActivity.class));
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 

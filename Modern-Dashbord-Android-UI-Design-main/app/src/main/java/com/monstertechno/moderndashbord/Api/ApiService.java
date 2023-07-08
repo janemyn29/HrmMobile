@@ -8,6 +8,7 @@ import com.monstertechno.moderndashbord.Model.Enum;
 import com.monstertechno.moderndashbord.Model.LoginModel;
 import com.monstertechno.moderndashbord.Model.PagingContract;
 import com.monstertechno.moderndashbord.Model.TempInfor;
+import com.monstertechno.moderndashbord.Model.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -50,4 +51,7 @@ public interface ApiService {
 
     @GET("api/Enum/EmployeeContractStatus")
     Call<List<Enum>> EmployeeContractStatus();
+
+    @GET("Emp/Infor")
+    Call<User> Infor(@Header("Authorization") String token);
 }

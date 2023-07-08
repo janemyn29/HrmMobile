@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ModernDashbord"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ViewPdfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InforActivity"
+            android:exported="false" />
+        <activity
             android:name=".ContractDetailActivity"
             android:exported="false" />
         <activity
@@ -29,7 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.monstertechno.moderndashbord.Api.ApiService;
 import com.monstertechno.moderndashbord.Data.DataManager;
 import com.monstertechno.moderndashbord.Model.Contract;
@@ -28,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ContractDetailActivity extends AppCompatActivity {
-
+    private TabLayout tabLayout;
     DataManager dataManager = DataManager.getInstance();
     TempInfor data = dataManager.getTempInfor();
     String Token = "Bearer "+ data.getToken();
@@ -56,11 +58,45 @@ public class ContractDetailActivity extends AppCompatActivity {
         tvIsPersional = findViewById(R.id.detail_contact_isPersional);
         tvStatus = findViewById(R.id.detail_contact_status);
         ivFile = findViewById(R.id.detail_contact_file);
+        tabLayout = findViewById(R.id.detail_contract_tabLayout);
 
        Intent intent = getIntent();
        id= intent.getStringExtra("code");
+       tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+           @Override
+           public void onTabSelected(TabLayout.Tab tab) {
+               int position = tab.getPosition();
+               // Thực hiện chuyển đổi Activity dựa trên vị trí của TabItem
+               switch (position) {
+                   case 0:
+                       startActivity(new Intent(ContractDetailActivity.this, MainActivity.class));
+                       break;
+                   case 1:
+                       //startActivity(new Intent(MainActivity.this, Activity2.class));
+                       break;
+                   case 2:
+                       //startActivity(new Intent(MainActivity.this, Activity2.class));
+                       break;
+                   case 3:
+                       startActivity(new Intent(ContractDetailActivity.this, InforActivity.class));
+                       break;
+               }
+           }
+
+           @Override
+           public void onTabUnselected(TabLayout.Tab tab) {
+
+           }
+
+           @Override
+           public void onTabReselected(TabLayout.Tab tab) {
+
+           }
+       });
 
        loadData();
+
+
 
     }
 /*
@@ -181,6 +217,16 @@ public class ContractDetailActivity extends AppCompatActivity {
                                 tvInsAmount.setText(Amount);
                                 tvIsPersional.setText(String.valueOf(contract.isPersonalTaxDeduction));
                                 tvStatus.setText(contract.status);
+
+                                ivFile.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent1 = new Intent(ContractDetailActivity.this, ViewPdfActivity.class);
+                                        intent1.putExtra("fileUrl", contract.file );
+                                        startActivity(intent1);
+                                    }
+                                });
+
 
                             }else if(response.code()==403|| response.code()==401){
                                 Intent intent = new Intent(ContractDetailActivity.this, LoginActivity.class);

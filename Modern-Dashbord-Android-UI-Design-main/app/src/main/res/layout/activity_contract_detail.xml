@@ -25,7 +25,7 @@
         android:id="@+id/contract_toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Danh Sách Hợp Đồng"
+        app:title="Chi Tiết Hợp Đồng"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -345,6 +345,7 @@
 
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/detail_contract_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_color_50">
