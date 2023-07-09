@@ -3,16 +3,19 @@ package com.monstertechno.moderndashbord.Api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.monstertechno.moderndashbord.Model.Contract;
-import com.monstertechno.moderndashbord.Model.ContractList;
+import com.monstertechno.moderndashbord.Model.DefaultModel;
+import com.monstertechno.moderndashbord.Model.EditOvertime;
 import com.monstertechno.moderndashbord.Model.Enum;
+import com.monstertechno.moderndashbord.Model.Leave;
+import com.monstertechno.moderndashbord.Model.LeaveAddModel;
 import com.monstertechno.moderndashbord.Model.LoginModel;
+import com.monstertechno.moderndashbord.Model.Overtime;
 import com.monstertechno.moderndashbord.Model.PagingContract;
+import com.monstertechno.moderndashbord.Model.PagingLeave;
+import com.monstertechno.moderndashbord.Model.PagingOvertime;
 import com.monstertechno.moderndashbord.Model.TempInfor;
 import com.monstertechno.moderndashbord.Model.User;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,7 +30,9 @@ import retrofit2.http.Query;
 public interface ApiService {
     //DateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
     String baseUrl = "https://hrmanagerfpt.azurewebsites.net/";
-    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            .create();
 
     ApiService apiService = new Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -46,6 +51,9 @@ public interface ApiService {
     @GET("api/Enum/SalaryType")
     Call<List<Enum>> SalaryType();
 
+    @GET("/api/Enum/LeaveShift")
+    Call<List<DefaultModel>> ShiftLeave();
+
     @GET("api/Enum/ContractType")
     Call<List<Enum>> ContractType();
 
@@ -54,4 +62,23 @@ public interface ApiService {
 
     @GET("Emp/Infor")
     Call<User> Infor(@Header("Authorization") String token);
+
+    @GET("Emp/LeaveLog")
+    Call<PagingLeave> LeaveLog(@Header("Authorization") String token, @Query("pg") int pg);
+
+    @POST("Emp/CreateLeaveLog")
+    Call<LeaveAddModel> CreateLeaveLog(@Header("Authorization") String token, @Body LeaveAddModel model );
+
+    @GET("Emp/GetLeaveLogById")
+    Call<Leave> GetLeaveLogById(@Header("Authorization") String token, @Query("id")String id);
+
+    @GET("Emp/GetOvertimeLog")
+    Call<PagingOvertime> GetOvertimeLog(@Header("Authorization") String token, @Query("pg") int pg);
+
+    @GET("Emp/GetOvertimeLogById")
+    Call<Overtime> GetOvertimeLogById(@Header("Authorization") String token, @Query("id")String id);
+
+    @GET("Emp/UpdateStatusOvertimeLogRequest")
+    Call<String> UpdateStatusOvertimeLogRequest(@Header("Authorization") String token, @Body EditOvertime model);
+
 }

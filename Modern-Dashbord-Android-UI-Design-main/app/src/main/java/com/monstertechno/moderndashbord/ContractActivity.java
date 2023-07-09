@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ import retrofit2.Response;
 
 public class ContractActivity extends AppCompatActivity implements SelectListener {
     Toolbar toolbar;
+    ProgressDialog pd ;
     private TabLayout tabLayout;
     DataManager dataManager = DataManager.getInstance();
     TempInfor data = dataManager.getTempInfor();
@@ -43,9 +46,8 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
     private boolean isLoading;
     private  boolean isLastPage;
     private List<Contract> mlist;
-
-    private int TotalPage ;
-    private  int currentPage;
+    private int totalPage ;
+    private  int currentPage = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,16 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
         toolbar.setTitle("Danh Sách Hợp Đồng");
         recyclerView = findViewById(R.id.contract_rv);
         tabLayout = findViewById(R.id.contract_tabLayout);
+
+        String Err = getIntent().getStringExtra("Error");
+        if(Err!=null && Err.equals("")){
+            Toast.makeText(this, Err, Toast.LENGTH_SHORT).show();
+        }
+
+        pd= new ProgressDialog(ContractActivity.this);
+        pd.setTitle("Danh sách hợp đồng");
+        pd.setMessage("Đang mở...!!!");
+        pd.show();
 
         adapter = new ContractAdapter(this, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -69,7 +81,8 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
                         startActivity(new Intent(ContractActivity.this, MainActivity.class));
                         break;
                     case 1:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(ContractActivity.this, OvertimeActivity.class));
+
                         break;
                     case 2:
                         //startActivity(new Intent(MainActivity.this, Activity2.class));
@@ -91,7 +104,29 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
             }
         });
 
-        loadList();
+        setFirstData();
+
+
+        recyclerView.addOnScrollListener(new PagingScrollListener(linearLayoutManager) {
+            @Override
+            public void loadMoreItem() {
+                isLoading=true;
+                currentPage+=1;
+                loadNextPage();
+                
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+        });
+
         Intent intent = getIntent();
         String data = intent.getStringExtra("Error");
         if(data!=null && data.isEmpty()&& data.equals("") ){
@@ -101,9 +136,53 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
 
     }
 
+    private void loadNextPage() {
+        List<Contract> list = loadList();
+        new Handler().postDelayed( new Runnable(){
+            @Override
+            public void run() {
+                adapter.removeFooterLoading();
+                mlist.addAll(list);
 
-    private void loadList() {
-        ApiService.apiService.ListContract(Token,1)
+                adapter.notifyDataSetChanged();
+                isLoading= false;
+                if(currentPage<totalPage){
+                    adapter.addFooterLoading();
+                }else{
+                    isLastPage = true;
+                }
+            }
+        }, 5000);
+
+    }
+
+    private void setFirstData(){
+
+        mlist = loadList();
+        new Handler().postDelayed( new Runnable(){
+
+            @Override
+            public void run() {
+                adapter.setData(mlist);
+                recyclerView.setAdapter(adapter);
+
+                if(currentPage<totalPage){
+                    adapter.addFooterLoading();
+                }else{
+                    isLastPage = true;
+                }
+                pd.dismiss();
+            }
+        }, 5000);
+
+
+    }
+
+
+    private ArrayList<Contract> loadList() {
+        ArrayList<Contract> list = new ArrayList<>();
+        Toast.makeText(this, "Tải thêm thông tin trang "+ currentPage,Toast.LENGTH_SHORT ).show();
+        ApiService.apiService.ListContract(Token,currentPage)
                 .enqueue(new Callback<PagingContract>() {
                     @Override
                     public void onResponse(Call<PagingContract> call, Response<PagingContract> response) {
@@ -112,15 +191,10 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
                             if(pagingContract==null){
                                 return;
                             }
-                            ArrayList<Contract> list = new ArrayList<>();
                             for (Contract contract: pagingContract.items) {
                                 list.add(contract);
                             }
-                            mlist = list;
-                            adapter.setData(list);
-                            recyclerView.setAdapter(adapter);
-                            TotalPage = pagingContract.totalPages;
-                            currentPage = pagingContract.pageNumber;
+                            totalPage = pagingContract.totalPages;
                         }else{
                             if(response.code()==403 || response.code()==401){
                                 Intent intent = new Intent(ContractActivity.this, LoginActivity.class);
@@ -141,12 +215,14 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
                         startActivity(intent);
                     }
                 });
+        return list;
     }
 
     @Override
-    public void onItemClicked(Contract contract) {
+    public void onItemClicked(Object contract) {
+        Contract newContract= (Contract) contract;
         Intent intent = new Intent(ContractActivity.this, ContractDetailActivity.class);
-        intent.putExtra("code", contract.contractCode);
+        intent.putExtra("code", newContract.contractCode);
         startActivity(intent);
     }
 

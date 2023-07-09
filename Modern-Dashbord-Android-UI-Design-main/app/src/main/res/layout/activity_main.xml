@@ -302,6 +302,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/main_leave"
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:layout_margin="5dp"
@@ -327,7 +328,7 @@
                         android:layout_margin="20dp"
                         android:background="@drawable/grocery_img_background"
                         android:padding="25dp"
-                        android:src="@drawable/groceries"
+                        android:src="@drawable/baseline_work_off_24"
                         app:tint="#fff" />
 
                     <TextView

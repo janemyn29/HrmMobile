@@ -45,7 +45,7 @@
 
 
         <TextView
-            android:id="@+id/item_contract_btnStatus"
+            android:id="@+id/item_leave_btnStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
@@ -55,7 +55,7 @@
             android:layout_gravity="center"/>
 
         <ImageView
-            android:id="@+id/item_contract_ivDetail"
+            android:id="@+id/item_leave_ivDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

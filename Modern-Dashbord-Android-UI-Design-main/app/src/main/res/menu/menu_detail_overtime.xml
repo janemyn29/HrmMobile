@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Tài khoản"
+        android:id="@+id/toolbar_account"/>
+    <item android:title="Đăng xuất"
+        android:id="@+id/toolbar_logout"/>
+    <item android:title="add"
+        android:icon="@drawable/baseline_mode_edit_24"
+        android:id="@+id/menu_edit"
+        app:showAsAction="always"
+        android:iconTint="@color/white"
+        />
+</menu>

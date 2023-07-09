@@ -36,70 +36,91 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ContractViewHoder> {
+public class ContractAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context mContext;
     private List<Contract> mListUser;
     private SelectListener listener;
-    private int No = 1;
+    private boolean isLoadingAdd;
 
     public ContractAdapter(Context mContext, SelectListener listener) {
         this.mContext = mContext;
         this.listener = listener;
     }
 
+    private static final int TYPE_ITEM =1;
+    private static final int TYPE_LOADING =2;
+
     public void setData(List<Contract> list){
-        mListUser = list;
+        this.mListUser = list;
         notifyDataSetChanged();
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if(mListUser!=null && position ==mListUser.size()-1 && isLoadingAdd){
+            return TYPE_LOADING;
+        }
+        return TYPE_ITEM;
     }
 
     @NonNull
     @Override
-    public ContractViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contract,parent,false);
-        return new ContractViewHoder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(TYPE_ITEM==viewType){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contract,parent,false);
+            return new ContractViewHoder(view);
+        }else{
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading,parent,false);
+            return new LoadingContractViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContractViewHoder holder, int position) {
-        Contract contract = mListUser.get(position);
-        if(contract == null){
-            return;
-        }
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String formattedDate = dateFormat.format(contract.endDate);
-        holder.tvNo.setText("STT: "+No);
-        holder.tvName.setText("Mã hợp đồng: "+contract.contractCode);
-        holder.tvDate.setText("Ngày hết hạn: "+formattedDate);
-        holder.btnStatus.setText(contract.status);
-        if(contract.status.equals("Waiting")){
-            int color = ContextCompat.getColor(mContext, R.color.yellow);
-            holder.btnStatus.setTextColor(color);
-        }else if(contract.status.equals("Pending")){
-            int color = ContextCompat.getColor(mContext, R.color.Green);
-            holder.btnStatus.setTextColor(color);
-        }else{
-            int color = ContextCompat.getColor(mContext, R.color.error_200);
-            holder.btnStatus.setTextColor(color);
-        }
-        holder.ivDetail.setImageResource(R.drawable.baseline_remove_red_eye_24);
-        No++;
-        holder.ivDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClicked(contract);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if(holder.getItemViewType()==TYPE_ITEM){
+            Contract contract = mListUser.get(position);
+            if(contract == null){
+                return;
             }
-        });
+            ContractViewHoder contractViewHoder = (ContractViewHoder) holder;
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String formattedDate = dateFormat.format(contract.endDate);
+            contractViewHoder.tvNo.setText("STT: "+ position+1);
+            contractViewHoder.tvName.setText("Mã hợp đồng: "+contract.contractCode);
+            contractViewHoder.tvDate.setText("Ngày hết hạn: "+formattedDate);
+            contractViewHoder.btnStatus.setText(contract.status);
+            if(contract.status.equals("Waiting")){
+                int color = ContextCompat.getColor(mContext, R.color.yellow);
+                contractViewHoder.btnStatus.setTextColor(color);
+            }else if(contract.status.equals("Pending")){
+                int color = ContextCompat.getColor(mContext, R.color.Green);
+                contractViewHoder.btnStatus.setTextColor(color);
+            }else{
+                int color = ContextCompat.getColor(mContext, R.color.error_200);
+                contractViewHoder.btnStatus.setTextColor(color);
+            }
+            contractViewHoder.ivDetail.setImageResource(R.drawable.baseline_remove_red_eye_24);
+            //No++;
+            contractViewHoder.ivDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClicked(contract);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
         if(mListUser!=null){
             return mListUser.size();
+
         }
         return 0;
     }
 
-    public class ContractViewHoder extends ViewHolder {
+    public class ContractViewHoder extends RecyclerView.ViewHolder {
 
         TextView tvName, tvDate, btnStatus, tvNo;
         ImageView ivDetail;
@@ -111,6 +132,31 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.Contra
             btnStatus = itemView.findViewById(R.id.item_contract_btnStatus);
             ivDetail = itemView.findViewById(R.id.item_contract_ivDetail);
             tvNo = itemView.findViewById(R.id.item_contract_tvNo);
+        }
+    }
+
+    public  class LoadingContractViewHolder extends RecyclerView.ViewHolder{
+        ProgressBar progressBar;
+
+        public LoadingContractViewHolder(@NonNull View itemView) {
+            super(itemView);
+            progressBar = itemView.findViewById(R.id.item_progressBar);
+        }
+    }
+
+
+    public void addFooterLoading(){
+        isLoadingAdd=true;
+        mListUser.add(new Contract());
+    }
+
+    public void removeFooterLoading(){
+        isLoadingAdd=false;
+        int position = mListUser.size()-1;
+        Contract contract = mListUser.get(position);
+        if(contract!=null){
+            mListUser.remove(position);
+            notifyItemRemoved(position);
         }
     }
 

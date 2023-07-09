@@ -69,7 +69,7 @@ public class InforActivity extends AppCompatActivity {
                         startActivity(new Intent(InforActivity.this, MainActivity.class));
                         break;
                     case 1:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(InforActivity.this, OvertimeActivity.class));
                         break;
                     case 2:
                         //startActivity(new Intent(MainActivity.this, Activity2.class));

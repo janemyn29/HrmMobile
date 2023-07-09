@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
-    CardView cvContract;
+    CardView cvContract,cvLeave;
     TextView tvFullname, tvRole;
     ShapeableImageView imgAvatar;
     @Override
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         tvRole = findViewById(R.id.main_tv_Role);
         imgAvatar = findViewById(R.id.main_img_avatar);
         cvContract = findViewById(R.id.main_cv_contract);
+        cvLeave = findViewById(R.id.main_leave);
         tabLayout = findViewById(R.id.main_tabLayout);
 
         tvRole.setText(data.getListRoles().get(0));
@@ -52,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        cvLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, LeaveActivity.class));
+            }
+        });
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -61,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         break;
                     case 1:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(MainActivity.this, OvertimeActivity.class));
                         break;
                     case 2:
                         //startActivity(new Intent(MainActivity.this, Activity2.class));

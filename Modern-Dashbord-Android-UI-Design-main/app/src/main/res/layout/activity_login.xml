@@ -57,6 +57,7 @@
             />
 
         <EditText
+            android:text="string123"
             android:id="@+id/login_Edt_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,6 +74,7 @@
             android:textColorHint="#979797" />
 
         <EditText
+            android:text="Employee1!"
             android:id="@+id/login_Edt_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

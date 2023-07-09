@@ -1,9 +1,11 @@
 package com.monstertechno.moderndashbord;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ import retrofit2.Response;
 
 public class ContractDetailActivity extends AppCompatActivity {
     private TabLayout tabLayout;
+    Toolbar toolbar;
     DataManager dataManager = DataManager.getInstance();
     TempInfor data = dataManager.getTempInfor();
     String Token = "Bearer "+ data.getToken();
@@ -45,6 +48,8 @@ public class ContractDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract_detail);
+        toolbar = findViewById(R.id.contract_toolbar);
+        setSupportActionBar(toolbar);
 
         tvCode = findViewById(R.id.detail_contact_code);
         tvStart = findViewById(R.id.detail_contact_start);
@@ -58,8 +63,8 @@ public class ContractDetailActivity extends AppCompatActivity {
         tvIsPersional = findViewById(R.id.detail_contact_isPersional);
         tvStatus = findViewById(R.id.detail_contact_status);
         ivFile = findViewById(R.id.detail_contact_file);
-        tabLayout = findViewById(R.id.detail_contract_tabLayout);
 
+        tabLayout = findViewById(R.id.detail_contact_tablayout);
        Intent intent = getIntent();
        id= intent.getStringExtra("code");
        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -72,7 +77,8 @@ public class ContractDetailActivity extends AppCompatActivity {
                        startActivity(new Intent(ContractDetailActivity.this, MainActivity.class));
                        break;
                    case 1:
-                       //startActivity(new Intent(MainActivity.this, Activity2.class));
+                       startActivity(new Intent(ContractDetailActivity.this, OvertimeActivity.class));
+
                        break;
                    case 2:
                        //startActivity(new Intent(MainActivity.this, Activity2.class));
@@ -183,6 +189,11 @@ public class ContractDetailActivity extends AppCompatActivity {
     }
 */
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar_contract, menu);
+        return true;
+    }
 
     private void loadData() {
         if(id==null){

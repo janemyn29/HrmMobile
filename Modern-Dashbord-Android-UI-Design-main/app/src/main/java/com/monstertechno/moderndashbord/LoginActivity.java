@@ -2,6 +2,7 @@ package com.monstertechno.moderndashbord;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     ShapeableImageView imgAvatar;
     TextView tvError;
     Button btnLogin;
+    ProgressDialog pd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String data = intent.getStringExtra("Error");
         tvError.setText(data);
-
+        pd= new ProgressDialog(LoginActivity.this);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +60,9 @@ public class LoginActivity extends AppCompatActivity {
                     check= false;
                 }
                 if(check){
+                    pd.setTitle("Đăng Nhập");
+                    pd.setMessage("Đang đăng nhập...!!!");
+                    pd.show();
                     clickCallAPILogin();
                 }
             }
@@ -74,7 +80,9 @@ public class LoginActivity extends AppCompatActivity {
                     TempInfor tempInfor = response.body();
                     if(tempInfor.getListRoles().get(0).equals("Manager")){
                         tvError.setText("Tài khoản Quản lý không thể đăng nhập vào ứng dụng này!");
+                        pd.dismiss();
                     }else{
+                        pd.dismiss();
                         DataManager dataManager = DataManager.getInstance();
                         dataManager.setTempInfor(tempInfor);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -91,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    pd.dismiss();
                     tvError.setText(errorDescription);
                 }
 
@@ -98,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<TempInfor> call, Throwable t) {
-
+                pd.dismiss();
                 tvError.setText("Vui lòng kiểm tra lại kết nối Internet!");
             }
         });

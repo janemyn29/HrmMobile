@@ -13,6 +13,21 @@
         android:theme="@style/Theme.ModernDashbord"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditOvertimeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OvertimeDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OvertimeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LeaveDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddLeaveActivity"
+            android:exported="false" />
+        <activity
             android:name=".LeaveActivity"
             android:exported="false" />
         <activity
