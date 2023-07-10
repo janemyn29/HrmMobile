@@ -73,7 +73,7 @@ public class LeaveDetailActivity extends AppCompatActivity {
                         startActivity(new Intent(LeaveDetailActivity.this, OvertimeActivity.class));
                         break;
                     case 2:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(LeaveDetailActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(LeaveDetailActivity.this, InforActivity.class));

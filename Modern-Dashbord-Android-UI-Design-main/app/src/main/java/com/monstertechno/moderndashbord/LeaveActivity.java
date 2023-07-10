@@ -78,7 +78,7 @@ public class LeaveActivity extends AppCompatActivity implements SelectListener {
                         startActivity(new Intent(LeaveActivity.this, OvertimeActivity.class));
                         break;
                     case 2:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(LeaveActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(LeaveActivity.this, InforActivity.class));

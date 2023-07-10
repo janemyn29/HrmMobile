@@ -10,6 +10,7 @@ import com.monstertechno.moderndashbord.Model.Leave;
 import com.monstertechno.moderndashbord.Model.LeaveAddModel;
 import com.monstertechno.moderndashbord.Model.LoginModel;
 import com.monstertechno.moderndashbord.Model.Overtime;
+import com.monstertechno.moderndashbord.Model.PagingAttendance;
 import com.monstertechno.moderndashbord.Model.PagingContract;
 import com.monstertechno.moderndashbord.Model.PagingLeave;
 import com.monstertechno.moderndashbord.Model.PagingOvertime;
@@ -84,4 +85,7 @@ public interface ApiService {
     @PUT("Emp/UpdateStatusOvertimeLogRequest")
     Call<ResponseBody> UpdateStatusOvertimeLogRequest(@Header("Authorization") String token, @Body EditOvertime model);
 
+
+    @GET("Emp/AttendanceEmployee")
+    Call<PagingAttendance> AttendanceEmployee(@Header("Authorization") String token, @Query("pg") int pg);
 }

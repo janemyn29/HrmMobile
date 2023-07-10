@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, OvertimeActivity.class));
                         break;
                     case 2:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(MainActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(MainActivity.this, InforActivity.class));

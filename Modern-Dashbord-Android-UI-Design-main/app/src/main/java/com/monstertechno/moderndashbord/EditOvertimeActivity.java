@@ -116,7 +116,7 @@ public class EditOvertimeActivity extends AppCompatActivity {
                         startActivity(new Intent(EditOvertimeActivity.this, OvertimeActivity.class));
                         break;
                     case 2:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(EditOvertimeActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(EditOvertimeActivity.this, InforActivity.class));

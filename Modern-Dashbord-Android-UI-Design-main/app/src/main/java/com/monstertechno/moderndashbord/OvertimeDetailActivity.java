@@ -73,7 +73,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
                         startActivity(new Intent(OvertimeDetailActivity.this, OvertimeActivity.class));
                         break;
                     case 2:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(OvertimeDetailActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(OvertimeDetailActivity.this, InforActivity.class));

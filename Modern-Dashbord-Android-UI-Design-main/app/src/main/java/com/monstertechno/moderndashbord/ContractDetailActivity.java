@@ -81,7 +81,7 @@ public class ContractDetailActivity extends AppCompatActivity {
 
                        break;
                    case 2:
-                       //startActivity(new Intent(MainActivity.this, Activity2.class));
+                       startActivity(new Intent(ContractDetailActivity.this, AttendanceActivity.class));
                        break;
                    case 3:
                        startActivity(new Intent(ContractDetailActivity.this, InforActivity.class));

@@ -81,7 +81,7 @@ public class AddLeaveActivity extends AppCompatActivity {
                         //startActivity(new Intent(MainActivity.this, Activity2.class));
                         break;
                     case 2:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(AddLeaveActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(AddLeaveActivity.this, InforActivity.class));

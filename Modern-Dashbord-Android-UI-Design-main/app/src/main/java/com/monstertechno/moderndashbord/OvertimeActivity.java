@@ -81,7 +81,7 @@ public class OvertimeActivity extends AppCompatActivity implements SelectListene
                     case 1:
                         break;
                     case 2:
-                        //startActivity(new Intent(MainActivity.this, Activity2.class));
+                        startActivity(new Intent(OvertimeActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(OvertimeActivity.this, InforActivity.class));

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:layout_weight="10"
+            android:orientation="vertical"
+            android:layout_marginEnd="10dp"
+            >
+            <TextView
+                android:id="@+id/item_attendance_Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="19dp"/>
+            <TextView
+                android:id="@+id/item_attendance_shift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ca "
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/item_attendance_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="start"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/item_attendance_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="end"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/item_attendance_workingTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/item_attendance_ot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <ImageView
+
+            android:id="@+id/item_attendance_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/baseline_remove_red_eye_24" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
