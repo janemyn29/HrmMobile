@@ -80,6 +80,7 @@ public class EditOvertimeActivity extends AppCompatActivity {
         btnAccept= findViewById(R.id.overtime_btnAccept);
         btnCancel= findViewById(R.id.overtime_btnCancel);
         tvError = findViewById(R.id.overtime_edit_error);
+        loadData();
 
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +89,15 @@ public class EditOvertimeActivity extends AppCompatActivity {
                 btnCancel.setActivated(false);
 
                 setAccept();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAccept.setActivated(false);
+                btnCancel.setActivated(false);
+                setBtnCancel();
             }
         });
 
@@ -131,22 +141,23 @@ public class EditOvertimeActivity extends AppCompatActivity {
 
     private void setAccept() {
         pd=  new ProgressDialog(EditOvertimeActivity.this);
-        pd.setTitle("Danh sách nghỉ phép");
-        pd.setMessage("Đang mở...!!!");
+        pd.setTitle("Phản hồi yêu cầu");
+        pd.setMessage("Đang chấp nhận...!!!");
         pd.show();
         EditOvertime model = new EditOvertime();
         model.id = id;
         model.status = 2;
-        ApiService.apiService.UpdateStatusOvertimeLogRequest(Token, model).enqueue(new Callback<String>() {
+        ApiService.apiService.UpdateStatusOvertimeLogRequest(Token,model).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code()==200){
                     pd.dismiss();
-                    Toast.makeText(EditOvertimeActivity.this, response.body(),Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(EditOvertimeActivity.this,"Chấp nhận yêu cầu tăng ca thành công!",Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(EditOvertimeActivity.this, OvertimeDetailActivity.class);
                     intent.putExtra("id", id);
                     startActivity(intent);
-                }else if(response.code()==403 || response.code()==401){
+                }else if(response.code()==403 || response.code() == 401){
                     Intent intent = new Intent(EditOvertimeActivity.this, LoginActivity.class);
                     intent.putExtra("Error", "Phiên đăng nhập đã hết hạn! Vui lòng đăng nhập lại!");
                     startActivity(intent);
@@ -162,21 +173,77 @@ public class EditOvertimeActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     pd.dismiss();
-                    btnAccept.setActivated(false);
-                    btnCancel.setActivated(false);
+                    btnAccept.setActivated(true);
+                    btnCancel.setActivated(true);
                     tvError.setText(errorDescription);
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 pd.dismiss();
                 Intent intent = new Intent(EditOvertimeActivity.this, LoginActivity.class);
                 intent.putExtra("Error", "Vui lòng kiểm tra lại kết nối Internet!");
                 startActivity(intent);
             }
         });
+    }
 
+
+    private void setBtnCancel() {
+
+        if(reason.getText().toString().equals("")){
+            reason.setError("Vui lòng điền lý do từ chối");
+            return;
+        }
+        pd=  new ProgressDialog(EditOvertimeActivity.this);
+        pd.setTitle("Phản hồi yêu cầu");
+        pd.setMessage("Đang từ chối...!!!");
+        pd.show();
+        EditOvertime model = new EditOvertime();
+        model.id = id;
+        model.status = 3;
+        model.cancelReason = reason.getText().toString();
+        ApiService.apiService.UpdateStatusOvertimeLogRequest(Token,model).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code()==200){
+                    pd.dismiss();
+
+                    Toast.makeText(EditOvertimeActivity.this,"Từ chối yêu cầu tăng ca thành công!",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(EditOvertimeActivity.this, OvertimeDetailActivity.class);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }else if(response.code()==403 || response.code() == 401){
+                    Intent intent = new Intent(EditOvertimeActivity.this, LoginActivity.class);
+                    intent.putExtra("Error", "Phiên đăng nhập đã hết hạn! Vui lòng đăng nhập lại!");
+                    startActivity(intent);
+                    pd.dismiss();
+                }else{
+                    String errorDescription = "";
+                    try {
+                        ResponseBody errorBody = response.errorBody();
+                        if (errorBody != null) {
+                            errorDescription = errorBody.string();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    pd.dismiss();
+                    btnAccept.setActivated(true);
+                    btnCancel.setActivated(true);
+                    tvError.setText(errorDescription);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                pd.dismiss();
+                Intent intent = new Intent(EditOvertimeActivity.this, LoginActivity.class);
+                intent.putExtra("Error", "Vui lòng kiểm tra lại kết nối Internet!");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

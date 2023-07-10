@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ModernDashbord"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".AttendanceActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditOvertimeActivity"
             android:exported="false" />
         <activity

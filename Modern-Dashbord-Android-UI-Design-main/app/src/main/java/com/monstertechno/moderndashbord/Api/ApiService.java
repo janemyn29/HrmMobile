@@ -13,11 +13,13 @@ import com.monstertechno.moderndashbord.Model.Overtime;
 import com.monstertechno.moderndashbord.Model.PagingContract;
 import com.monstertechno.moderndashbord.Model.PagingLeave;
 import com.monstertechno.moderndashbord.Model.PagingOvertime;
+import com.monstertechno.moderndashbord.Model.ResponseModel;
 import com.monstertechno.moderndashbord.Model.TempInfor;
 import com.monstertechno.moderndashbord.Model.User;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,6 +27,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -78,7 +81,7 @@ public interface ApiService {
     @GET("Emp/GetOvertimeLogById")
     Call<Overtime> GetOvertimeLogById(@Header("Authorization") String token, @Query("id")String id);
 
-    @GET("Emp/UpdateStatusOvertimeLogRequest")
-    Call<String> UpdateStatusOvertimeLogRequest(@Header("Authorization") String token, @Body EditOvertime model);
+    @PUT("Emp/UpdateStatusOvertimeLogRequest")
+    Call<ResponseBody> UpdateStatusOvertimeLogRequest(@Header("Authorization") String token, @Body EditOvertime model);
 
 }

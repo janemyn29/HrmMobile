@@ -25,7 +25,7 @@
         android:id="@+id/contract_toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Chi Tiết Yêu Cầu Nghỉ Phép"
+        app:title="Chi Tiết Yêu Cầu Tăng Ca"
         />
     <LinearLayout
         android:layout_width="match_parent"
