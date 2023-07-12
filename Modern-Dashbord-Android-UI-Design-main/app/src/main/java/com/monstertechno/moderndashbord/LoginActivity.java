@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.monstertechno.moderndashbord.Api.ApiService;
 import com.monstertechno.moderndashbord.Data.DataManager;
+import com.monstertechno.moderndashbord.Model.IpClass;
 import com.monstertechno.moderndashbord.Model.LoginModel;
 import com.monstertechno.moderndashbord.Model.TempInfor;
 
@@ -69,6 +70,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /*private void clickCallAPILogin() {
+        ApiService.apiService.Ip().enqueue(new Callback<IpClass>() {
+            @Override
+            public void onResponse(Call<IpClass> call, Response<IpClass> response) {
+                IpClass ip = response.body();
+                String ipv6 = ip.ipString;
+            }
+
+            @Override
+            public void onFailure(Call<IpClass> call, Throwable t) {
+
+            }
+        });
+    }
+*/
     private void clickCallAPILogin(){
         String username = String.valueOf(edtUsername.getText());
         String pass = String.valueOf(edtPass.getText());

@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e181634a-8b34-4926-b93f-8302099cbb4e" name="Changes" comment="" />
+    <list default="true" id="e181634a-8b34-4926-b93f-8302099cbb4e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/AddLeaveActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/AddLeaveActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/Api/ApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/Api/ApiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/AttendanceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/AttendanceActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/ContractActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/ContractActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/ContractDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/ContractDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/EditOvertimeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/EditOvertimeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/InforActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/InforActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/LeaveActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/LeaveActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/LeaveDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/LeaveDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/OvertimeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/OvertimeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/OvertimeDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/java/com/monstertechno/moderndashbord/OvertimeDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Modern-Dashbord-Android-UI-Design-main/app/src/main/res/values/strings.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +39,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "android.gradle.sync.needed": "true",
     "cidr.known.project.marker": "true",
     "last_opened_file_path": "C:/Users/tramy/Desktop/Sem6/HrmMobile/Modern-Dashbord-Android-UI-Design-main"
   }

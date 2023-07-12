@@ -54,6 +54,7 @@ public class ContractActivity extends AppCompatActivity implements SelectListene
         setContentView(R.layout.activity_contract);
         toolbar = findViewById(R.id.contract_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Danh Sách Hợp Đồng");
         recyclerView = findViewById(R.id.contract_rv);
         tabLayout = findViewById(R.id.contract_tabLayout);

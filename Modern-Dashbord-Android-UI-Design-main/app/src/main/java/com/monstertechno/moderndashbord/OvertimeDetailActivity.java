@@ -53,6 +53,7 @@ public class OvertimeDetailActivity extends AppCompatActivity {
         id= intent.getStringExtra("id");
         toolbar = findViewById(R.id.contract_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvId = findViewById(R.id.detail_leave_id);
         tvDate = findViewById(R.id.detail_leave_date);

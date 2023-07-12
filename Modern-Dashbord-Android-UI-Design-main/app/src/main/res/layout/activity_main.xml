@@ -176,6 +176,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/main_cv_position"
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:layout_margin="5dp"
@@ -189,6 +190,7 @@
 
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/background_color_50"
@@ -201,7 +203,7 @@
                         android:layout_margin="20dp"
                         android:background="@drawable/shopping_ing_background"
                         android:padding="25dp"
-                        android:src="@drawable/shopping_cart"
+                        android:src="@drawable/baseline_category_24"
                         app:tint="#fff" />
 
                     <TextView

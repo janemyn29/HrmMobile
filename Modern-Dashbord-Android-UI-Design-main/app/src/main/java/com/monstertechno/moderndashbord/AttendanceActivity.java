@@ -54,6 +54,7 @@ public class AttendanceActivity extends AppCompatActivity implements SelectListe
         setContentView(R.layout.activity_attendance);
         toolbar = findViewById(R.id.leave_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pd=  new ProgressDialog(AttendanceActivity.this);
         pd.setTitle("Danh sách chấm công");
         pd.setMessage("Đang mở...!!!");
@@ -226,7 +227,7 @@ public class AttendanceActivity extends AppCompatActivity implements SelectListe
         int id = item.getItemId();
         switch (id){
             case R.id.menu_leave_add:
-                startActivity(new Intent(AttendanceActivity.this,AddLeaveActivity.class));
+                startActivity(new Intent(AttendanceActivity.this,AddAttendanceActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

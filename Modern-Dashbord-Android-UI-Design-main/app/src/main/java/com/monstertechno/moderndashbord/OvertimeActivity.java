@@ -55,6 +55,7 @@ public class OvertimeActivity extends AppCompatActivity implements SelectListene
         setContentView(R.layout.activity_overtime);setContentView(R.layout.activity_leave);
         toolbar = findViewById(R.id.leave_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tabLayout = findViewById(R.id.contract_tabLayout);
 
         tabLayout.getTabAt(1).select();

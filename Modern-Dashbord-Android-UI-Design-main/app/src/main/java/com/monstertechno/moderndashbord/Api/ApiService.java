@@ -2,10 +2,12 @@ package com.monstertechno.moderndashbord.Api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.monstertechno.moderndashbord.Model.Attendance;
 import com.monstertechno.moderndashbord.Model.Contract;
 import com.monstertechno.moderndashbord.Model.DefaultModel;
 import com.monstertechno.moderndashbord.Model.EditOvertime;
 import com.monstertechno.moderndashbord.Model.Enum;
+import com.monstertechno.moderndashbord.Model.IpClass;
 import com.monstertechno.moderndashbord.Model.Leave;
 import com.monstertechno.moderndashbord.Model.LeaveAddModel;
 import com.monstertechno.moderndashbord.Model.LoginModel;
@@ -14,6 +16,8 @@ import com.monstertechno.moderndashbord.Model.PagingAttendance;
 import com.monstertechno.moderndashbord.Model.PagingContract;
 import com.monstertechno.moderndashbord.Model.PagingLeave;
 import com.monstertechno.moderndashbord.Model.PagingOvertime;
+import com.monstertechno.moderndashbord.Model.Position;
+import com.monstertechno.moderndashbord.Model.Regulation;
 import com.monstertechno.moderndashbord.Model.ResponseModel;
 import com.monstertechno.moderndashbord.Model.TempInfor;
 import com.monstertechno.moderndashbord.Model.User;
@@ -34,6 +38,7 @@ import retrofit2.http.Query;
 public interface ApiService {
     //DateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
     String baseUrl = "https://hrmanagerfpt.azurewebsites.net/";
+    //String baseUrl = "https://api-bdc.net/";
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             .create();
@@ -88,4 +93,19 @@ public interface ApiService {
 
     @GET("Emp/AttendanceEmployee")
     Call<PagingAttendance> AttendanceEmployee(@Header("Authorization") String token, @Query("pg") int pg);
+
+    @GET("Emp/AttendanceEmployee/GetAttendanceCurrentDay")
+    Call<List<Attendance>> GetCurrentAttendance(@Header("Authorization") String token);
+
+    @GET("Emp/AttendanceEmployee/AttendantRegulations")
+    Call<Regulation> AttendantRegulations(@Header("Authorization") String token);
+
+    @GET("Emp/AttendanceEmployee/CreateAttendanceForMobileOnly")
+    Call<ResponseBody> AttendanceEmployeeCreate(@Header("Authorization") String token,@Query("ip") String ip);
+
+    @GET("Emp/GetPosition")
+    Call<Position> GetPosition(@Header("Authorization") String token);
+
+    /*@GET("data/client-info")
+    Call<IpClass> Ip();*/
 }

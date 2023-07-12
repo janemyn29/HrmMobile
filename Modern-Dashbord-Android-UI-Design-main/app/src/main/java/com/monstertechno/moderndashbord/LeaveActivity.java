@@ -54,6 +54,7 @@ public class LeaveActivity extends AppCompatActivity implements SelectListener {
         setContentView(R.layout.activity_leave);
         toolbar = findViewById(R.id.leave_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pd=  new ProgressDialog(LeaveActivity.this);
         pd.setTitle("Danh sách nghỉ phép");
         pd.setMessage("Đang mở...!!!");

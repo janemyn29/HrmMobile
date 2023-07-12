@@ -50,6 +50,7 @@ public class ContractDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contract_detail);
         toolbar = findViewById(R.id.contract_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvCode = findViewById(R.id.detail_contact_code);
         tvStart = findViewById(R.id.detail_contact_start);

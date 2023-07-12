@@ -65,6 +65,7 @@ public class AddLeaveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_leave);
         toolbar = findViewById(R.id.contract_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tabLayout = findViewById(R.id.contract_tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

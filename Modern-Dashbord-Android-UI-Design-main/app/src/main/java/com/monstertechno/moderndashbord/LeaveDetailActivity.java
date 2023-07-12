@@ -48,6 +48,7 @@ public class LeaveDetailActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.contract_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tabLayout = findViewById(R.id.detail_contact_tablayout);
         Intent intent = getIntent();

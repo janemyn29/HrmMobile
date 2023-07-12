@@ -13,35 +13,53 @@
         android:theme="@style/Theme.ModernDashbord"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PositionActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AddAttendanceActivity"
+            android:exported="false"
+            android:parentActivityName=".AttendanceActivity"/>
+        <activity
             android:name=".AttendanceActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditOvertimeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".OvertimeActivity" />
         <activity
             android:name=".OvertimeDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".OvertimeActivity" />
         <activity
             android:name=".OvertimeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LeaveDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".LeaveActivity" />
         <activity
             android:name=".AddLeaveActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".LeaveActivity" />
         <activity
             android:name=".LeaveActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ViewPdfActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ContractActivity" />
         <activity
             android:name=".InforActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ContractDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ContractActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -53,10 +71,12 @@
         </activity>
         <activity
             android:name=".ContractActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".LoginActivity" />
     </application>
 
 </manifest>

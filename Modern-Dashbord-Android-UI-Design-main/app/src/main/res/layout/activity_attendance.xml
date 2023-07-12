@@ -25,7 +25,7 @@
         android:id="@+id/leave_toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Danh Sách Nghỉ Phép"
+        app:title="Danh Sách Chấm Công"
         app:menu="@menu/menu_leave"
         />
 
