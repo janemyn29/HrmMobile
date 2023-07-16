@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
@@ -33,6 +35,7 @@ import retrofit2.Response;
 public class InforActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     Toolbar toolbar;
+    Button btnChange;
     DataManager dataManager = DataManager.getInstance();
     TempInfor data = dataManager.getTempInfor();
     String Token = "Bearer "+ data.getToken();
@@ -62,7 +65,7 @@ public class InforActivity extends AppCompatActivity {
         tvemail = findViewById(R.id.info_email);
         tvPhone = findViewById(R.id.info_phone);
         ivAvatar = findViewById(R.id.infor_avartar);
-
+        btnChange = findViewById(R.id.infor_changePass);
 
         loadData();
 
@@ -95,6 +98,12 @@ public class InforActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+        btnChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(InforActivity.this, ChangePassActivity.class));
             }
         });
     }

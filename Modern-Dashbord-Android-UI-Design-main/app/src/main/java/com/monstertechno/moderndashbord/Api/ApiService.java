@@ -3,10 +3,12 @@ package com.monstertechno.moderndashbord.Api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.monstertechno.moderndashbord.Model.Attendance;
+import com.monstertechno.moderndashbord.Model.ChangePassModel;
 import com.monstertechno.moderndashbord.Model.Contract;
 import com.monstertechno.moderndashbord.Model.DefaultModel;
 import com.monstertechno.moderndashbord.Model.EditOvertime;
 import com.monstertechno.moderndashbord.Model.Enum;
+import com.monstertechno.moderndashbord.Model.ErrorModel;
 import com.monstertechno.moderndashbord.Model.IpClass;
 import com.monstertechno.moderndashbord.Model.Leave;
 import com.monstertechno.moderndashbord.Model.LeaveAddModel;
@@ -16,9 +18,12 @@ import com.monstertechno.moderndashbord.Model.PagingAttendance;
 import com.monstertechno.moderndashbord.Model.PagingContract;
 import com.monstertechno.moderndashbord.Model.PagingLeave;
 import com.monstertechno.moderndashbord.Model.PagingOvertime;
+import com.monstertechno.moderndashbord.Model.PagingPayslip;
+import com.monstertechno.moderndashbord.Model.Payslip;
 import com.monstertechno.moderndashbord.Model.Position;
 import com.monstertechno.moderndashbord.Model.Regulation;
 import com.monstertechno.moderndashbord.Model.ResponseModel;
+import com.monstertechno.moderndashbord.Model.ResultDependent;
 import com.monstertechno.moderndashbord.Model.TempInfor;
 import com.monstertechno.moderndashbord.Model.User;
 
@@ -108,4 +113,19 @@ public interface ApiService {
 
     /*@GET("data/client-info")
     Call<IpClass> Ip();*/
+
+
+
+    @GET("Emp/GetListPayslip")
+    Call<PagingPayslip> Payslip(@Header("Authorization") String token, @Query("pg") int pg);
+
+    @GET("Emp/GetDetailPayslip")
+    Call<Payslip> GetPayslipById(@Header("Authorization") String token, @Query("id")String id);
+
+
+    @PUT("Account/ChangePassword")
+    Call<ResponseBody> ChangePassword(@Header("Authorization") String token, @Body ChangePassModel model);
+
+    @GET("Emp/ListDependent")
+    Call<ResultDependent> ListDependent(@Header("Authorization") String token, @Query("pg") int pg);
 }

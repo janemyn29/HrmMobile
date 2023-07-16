@@ -13,13 +13,28 @@
         android:theme="@style/Theme.ModernDashbord"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DependantActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePassActivity"
+            android:exported="false"
+            android:parentActivityName=".InforActivity" />
+        <activity
+            android:name=".PayslipDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".PayslipActivity" />
+        <activity
+            android:name=".PayslipActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".PositionActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddAttendanceActivity"
             android:exported="false"
-            android:parentActivityName=".AttendanceActivity"/>
+            android:parentActivityName=".AttendanceActivity" />
         <activity
             android:name=".AttendanceActivity"
             android:exported="false"
