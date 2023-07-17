@@ -1,15 +1,19 @@
 package com.monstertechno.moderndashbord;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     CardView cvContract,cvLeave, cvPosition, cvPayslip, cvDependent;
     TextView tvFullname, tvRole;
     ShapeableImageView imgAvatar;
+    ImageView logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         cvPosition = findViewById(R.id.main_cv_position);
         cvPayslip = findViewById(R.id.main_cv_payslip);
         cvDependent = findViewById(R.id.main_cv_dependent);
+        logout = findViewById(R.id.main_logout);
 
         tvRole.setText(data.getListRoles().get(0));
         tvFullname.setText(data.getFullName());
@@ -81,6 +87,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, DependantActivity.class));
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Đăng xuất");
+                builder.setMessage("Bạn có chắc chắn muốn đăng xuất?");
+                builder.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+                        dataManager.setTempInfor(null);
+                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    }
+                });
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss(); // Đóng dialog nếu người dùng chọn Hủy
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 

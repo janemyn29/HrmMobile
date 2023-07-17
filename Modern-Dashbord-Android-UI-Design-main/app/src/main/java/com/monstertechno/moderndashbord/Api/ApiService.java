@@ -2,6 +2,7 @@ package com.monstertechno.moderndashbord.Api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.monstertechno.moderndashbord.Model.AddDependant;
 import com.monstertechno.moderndashbord.Model.Attendance;
 import com.monstertechno.moderndashbord.Model.ChangePassModel;
 import com.monstertechno.moderndashbord.Model.Contract;
@@ -127,5 +128,9 @@ public interface ApiService {
     Call<ResponseBody> ChangePassword(@Header("Authorization") String token, @Body ChangePassModel model);
 
     @GET("Emp/ListDependent")
-    Call<ResultDependent> ListDependent(@Header("Authorization") String token, @Query("pg") int pg);
+    Call<ResultDependent> ListDependent(@Header("Authorization") String token, @Query("page") int pg);
+
+    @POST("Emp/DependentCreate")
+    Call<ResponseBody> DependentCreate(@Header("Authorization") String token, @Body AddDependant model );
+
 }

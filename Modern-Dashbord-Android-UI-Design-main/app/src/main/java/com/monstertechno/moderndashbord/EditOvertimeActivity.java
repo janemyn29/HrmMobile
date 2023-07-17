@@ -1,6 +1,7 @@
 package com.monstertechno.moderndashbord;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -247,15 +249,6 @@ public class EditOvertimeActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar_contract, menu);
-
-        myMenu = menu;
-
-        return true;
-    }
-
     private void loadData() {
         if(id==null){
             Intent intent = new Intent(EditOvertimeActivity.this, OvertimeActivity.class);
@@ -313,15 +306,40 @@ public class EditOvertimeActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_leave, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch (id){
-            case R.id.menu_edit:
-                Intent intent = new Intent(OvertimeDetailActivity.this,EditOvertimeActivity.class);
-                intent.putExtra("id",id);
-                startActivity(intent);
+        if (id == R.id.toolbar_logout){
+            logout();
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
+
+    private void logout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditOvertimeActivity.this);
+        builder.setTitle("Đăng xuất");
+        builder.setMessage("Bạn có chắc chắn muốn đăng xuất?");
+        builder.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(EditOvertimeActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+                dataManager.setTempInfor(null);
+                startActivity(new Intent(EditOvertimeActivity.this,LoginActivity.class));
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Đóng dialog nếu người dùng chọn Hủy
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

@@ -10,10 +10,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,11 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.monstertechno.moderndashbord.Adapter.CustomSpinnerAdapter;
 import com.monstertechno.moderndashbord.Api.ApiService;
 import com.monstertechno.moderndashbord.Data.DataManager;
+import com.monstertechno.moderndashbord.Model.AddDependant;
 import com.monstertechno.moderndashbord.Model.DefaultModel;
-import com.monstertechno.moderndashbord.Model.Enum;
 import com.monstertechno.moderndashbord.Model.LeaveAddModel;
 import com.monstertechno.moderndashbord.Model.TempInfor;
 
@@ -44,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddLeaveActivity extends AppCompatActivity {
+public class AddDependantActivity extends AppCompatActivity {
 
     String REQUIRE = "Require";
     Toolbar toolbar;
@@ -54,9 +51,8 @@ public class AddLeaveActivity extends AppCompatActivity {
     String Token = "Bearer "+ data.getToken();
 
 
-    Spinner spinner;
     Button btnDate,btnCreate;
-    EditText etReason;
+    EditText etName, etRela , etDes;
     TextView tvError;
     List<DefaultModel> defaultModel = new ArrayList<>();
     ProgressDialog pd;
@@ -66,7 +62,7 @@ public class AddLeaveActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_leave);
+        setContentView(R.layout.activity_add_dependant);
         toolbar = findViewById(R.id.contract_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,17 +75,17 @@ public class AddLeaveActivity extends AppCompatActivity {
                 // Thực hiện chuyển đổi Activity dựa trên vị trí của TabItem
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(AddLeaveActivity.this, MainActivity.class));
+                        startActivity(new Intent(AddDependantActivity.this, MainActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(AddLeaveActivity.this, OvertimeActivity.class));
+                        startActivity(new Intent(AddDependantActivity.this, OvertimeActivity.class));
                         //startActivity(new Intent(MainActivity.this, Activity2.class));
                         break;
                     case 2:
-                        startActivity(new Intent(AddLeaveActivity.this, AttendanceActivity.class));
+                        startActivity(new Intent(AddDependantActivity.this, AttendanceActivity.class));
                         break;
                     case 3:
-                        startActivity(new Intent(AddLeaveActivity.this, InforActivity.class));
+                        startActivity(new Intent(AddDependantActivity.this, InforActivity.class));
                         break;
                 }
             }
@@ -105,12 +101,12 @@ public class AddLeaveActivity extends AppCompatActivity {
             }
         });
 
-        spinner = findViewById(R.id.leave_add_shift);
-        btnDate = findViewById(R.id.leave_add_btnselect);
-        etReason = findViewById(R.id.leave_add_reason);
+        etName = findViewById(R.id.dependant_add_name);
+        btnDate = findViewById(R.id.dependant_add_date);
+        etRela = findViewById(R.id.dependant_add_rela);
+        etDes = findViewById(R.id.dependant_add_des);
         btnCreate = findViewById(R.id.leave_add_btnCreate);
         tvError = findViewById(R.id.leave_add_error);
-        setValueForSnipper();
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,51 +118,61 @@ public class AddLeaveActivity extends AppCompatActivity {
 
     private void createLeaveLog() {
         btnCreate.setActivated(false);
-        pd=  new ProgressDialog(AddLeaveActivity.this);
-        pd.setTitle("Nghỉ phép");
-        pd.setMessage("Đang tạo yêu cầu...!!!");
+        pd=  new ProgressDialog(AddDependantActivity.this);
+        pd.setTitle("Người phụ thuộc");
+        pd.setMessage("Đang thêm...!!!");
         pd.show();
 
-        LeaveAddModel model = new LeaveAddModel();
+        AddDependant model = new AddDependant();
         String dateString = btnDate.getText().toString();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
             Date date = format.parse(dateString);
             // Sử dụng đối tượng date
-            model.leaveDate = date;
+            model.birthDate = date;
 
         } catch (ParseException e) {
             pd.dismiss();
             btnCreate.setActivated(true);
-            tvError.setText("Vui lòng chọn ngày nghỉ!");
+            tvError.setText("Vui lòng chọn ngày sinh!");
             return;
         }
-        int shift = 0;
-        for (DefaultModel temp: defaultModel
-             ) {
-            if(temp.display.equals(spinner.getSelectedItem())){
-                model.leaveShift = temp.value;
-            }
-        }
-        String reason = etReason.getText().toString();
-        if(reason.equals("")){
-            etReason.setError(REQUIRE);
+        String name = etName.getText().toString();
+        String rela = etRela.getText().toString();
+        String des = etDes.getText().toString();
+        if(name.equals("")){
+            etName.setError(REQUIRE);
             btnCreate.setActivated(true);
             pd.dismiss();
             return;
         }
-        model.reason = reason;
+        if(rela.equals("")){
+            etRela.setError(REQUIRE);
+            btnCreate.setActivated(true);
+            pd.dismiss();
+            return;
+        }
+        if(des.equals("")){
+            etDes.setError(REQUIRE);
+            btnCreate.setActivated(true);
+            pd.dismiss();
+            return;
+        }
 
-        ApiService.apiService.CreateLeaveLog(Token,model).enqueue(new Callback<LeaveAddModel>() {
+        model.relationship = rela;
+        model.name = name;
+        model.desciption = des;
+
+        ApiService.apiService.DependentCreate(Token,model).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<LeaveAddModel> call, Response<LeaveAddModel> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code()==200){
                     pd.dismiss();
-                    Toast.makeText(AddLeaveActivity.this, "Tạo yêu cầu nghỉ phép thành công",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(AddLeaveActivity.this, LeaveActivity.class));
+                    Toast.makeText(AddDependantActivity.this, "Thêm người phụ thuộc thành công!",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(AddDependantActivity.this, DependantActivity.class));
                 }else if(response.code()==403 || response.code()==401){
-                    Intent intent = new Intent(AddLeaveActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(AddDependantActivity.this, LoginActivity.class);
                     intent.putExtra("Error", "Phiên đăng nhập đã hết hạn! Vui lòng đăng nhập lại!");
                     startActivity(intent);
                     pd.dismiss();
@@ -187,9 +193,9 @@ public class AddLeaveActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LeaveAddModel> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 pd.dismiss();
-                Intent intent = new Intent(AddLeaveActivity.this, LoginActivity.class);
+                Intent intent = new Intent(AddDependantActivity.this, LoginActivity.class);
                 intent.putExtra("Error", "Vui lòng kiểm tra lại kết nối Internet!");
                 startActivity(intent);
             }
@@ -202,7 +208,7 @@ public class AddLeaveActivity extends AppCompatActivity {
         initialMonth = calendar.get(Calendar.MONTH);
         initialDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(AddLeaveActivity.this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddDependantActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -212,58 +218,27 @@ public class AddLeaveActivity extends AppCompatActivity {
                 },initialYear,initialMonth-1,initialDay);
         datePickerDialog.show();
     }
-    private void setValueForSnipper() {
-        ApiService.apiService.ShiftLeave().enqueue(new Callback<List<DefaultModel>>() {
-            @Override
-            public void onResponse(Call<List<DefaultModel>> call, Response<List<DefaultModel>> response) {
-                if(response.code()==200){
-                    defaultModel = response.body();
-                    List<String> itemList = new ArrayList<>();
-                    for (int i=0;i<defaultModel.size();i++){
-                        itemList.add(defaultModel.get(i).display);
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AddLeaveActivity.this, android.R.layout.simple_spinner_item, itemList);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
-                }else if(response.code()==403|| response.code()==401){
-                    Intent intent = new Intent(AddLeaveActivity.this, LoginActivity.class);
-                    intent.putExtra("Error", "Phiên đăng nhập đã hết hạn! Vui lòng đăng nhập lại!");
-                    startActivity(intent);
-                }else{
-                    Intent intent = new Intent(AddLeaveActivity.this, LoginActivity.class);
-                    intent.putExtra("Error", "Đã xảy ra lỗi trong quá trình xử lý!");
-                    startActivity(intent);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<DefaultModel>> call, Throwable t) {
-                Intent intent = new Intent(AddLeaveActivity.this, LoginActivity.class);
-                intent.putExtra("Error", "Vui lòng kiểm tra lại kết nối Internet!");
-                startActivity(intent);
-            }
-        });
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_logout){
-                logout();
+            logout();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void logout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddLeaveActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddDependantActivity.this);
         builder.setTitle("Đăng xuất");
         builder.setMessage("Bạn có chắc chắn muốn đăng xuất?");
         builder.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(AddLeaveActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddDependantActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
                 dataManager.setTempInfor(null);
-                startActivity(new Intent(AddLeaveActivity.this,LoginActivity.class));
+                startActivity(new Intent(AddDependantActivity.this,LoginActivity.class));
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {

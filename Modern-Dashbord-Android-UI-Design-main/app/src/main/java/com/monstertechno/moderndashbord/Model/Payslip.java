@@ -1,6 +1,7 @@
 package com.monstertechno.moderndashbord.Model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Payslip {
     public String employeeContractId;
@@ -54,6 +55,6 @@ public class Payslip {
     public String bankName;
     public String bankAcountName;
     public String bankAcountNumber;
-    public Object detailTaxes;
+    public List<DetailTaxes> detailTaxes;
     public String id;
 }

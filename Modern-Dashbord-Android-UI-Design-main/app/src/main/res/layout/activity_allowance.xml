@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context=".DependantActivity">
+    tools:context=".InforActivity">
 
     <ImageView
         android:id="@+id/root"
@@ -22,12 +22,11 @@
         app:titleTextColor="@color/white"
         android:elevation="4dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/leave_toolbar"
+        android:id="@+id/contract_toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Danh Sách Người Phụ Thuộc"
+        app:title="Hồ Sơ Cá Nhân"
         />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,50 +39,24 @@
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leave_toolbar">
-        <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/contract_toolbar"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <androidx.cardview.widget.CardView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            android:layout_marginBottom="5dp">
-            <EditText
-                android:text="string123"
-                android:id="@+id/leave_tvFilter"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/edit_text_background"
-                android:drawableStart="@drawable/baseline_manage_search_24"
-                android:drawablePadding="15dp"
-                android:drawableTint="@color/pastel"
-                android:hint="Tên Đăng Nhập / Email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:textColorHint="#979797" />
-            <Button
-                android:id="@+id/leave_btnFilter"
-                android:layout_weight="3"
-                android:text="Lọc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:drawableStart="@drawable/ic_baseline_person_24"
+            android:paddingBottom="40dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            >
 
-                android:drawableTint="@color/pastel"
-                android:hint="Tên Đăng Nhập / Email"
-                android:inputType="textEmailAddress"
-
-                android:textColorHint="#979797" />
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/leave_rv"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
+        </androidx.cardview.widget.CardView>
+        </ScrollView>
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -98,12 +71,13 @@
 
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/contract_tabLayout"
+            android:id="@+id/infor_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_color_50">
 
             <com.google.android.material.tabs.TabItem
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/baseline_home_24" />

@@ -1,12 +1,14 @@
 package com.monstertechno.moderndashbord;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -168,6 +170,8 @@ public class DependantActivity extends AppCompatActivity implements SelectListen
 
     }
 
+
+
     private ArrayList<Dependent> load(){
         ArrayList<Dependent> list = new ArrayList<>();
         Toast.makeText(this, "Tải thêm thông tin trang "+ currentPage,Toast.LENGTH_SHORT ).show();
@@ -220,6 +224,39 @@ public class DependantActivity extends AppCompatActivity implements SelectListen
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_leave, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id ==R.id.toolbar_logout ) {
+            logout();
+        }else if(id == R.id.menu_leave_add){
+                startActivity(new Intent(DependantActivity.this, AddDependantActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DependantActivity.this);
+        builder.setTitle("Đăng xuất");
+        builder.setMessage("Bạn có chắc chắn muốn đăng xuất?");
+        builder.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(DependantActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+                dataManager.setTempInfor(null);
+                startActivity(new Intent(DependantActivity.this,LoginActivity.class));
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Đóng dialog nếu người dùng chọn Hủy
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

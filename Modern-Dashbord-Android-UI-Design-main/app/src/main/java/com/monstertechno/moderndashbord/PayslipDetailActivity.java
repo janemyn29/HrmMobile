@@ -1,19 +1,28 @@
 package com.monstertechno.moderndashbord;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.monstertechno.moderndashbord.Adapter.TableAdapter;
 import com.monstertechno.moderndashbord.Api.ApiService;
 import com.monstertechno.moderndashbord.Data.DataManager;
 import com.monstertechno.moderndashbord.Model.DefaultModel;
+import com.monstertechno.moderndashbord.Model.DetailTaxes;
 import com.monstertechno.moderndashbord.Model.Leave;
 import com.monstertechno.moderndashbord.Model.Payslip;
 import com.monstertechno.moderndashbord.Model.TempInfor;
@@ -41,8 +50,12 @@ public class PayslipDetailActivity extends AppCompatActivity {
             tvLeaveAmount,tvNote, tvBankname, tvBankAccount, tvBankaccuntName, tvFinalSalary,
             tvInsType, tvInsAmount, tvMinimum, tvXHPer,tvYtPer, tvTNPer, tvRegionName,tvRegionSalary, tvPersional, tvDepenanceAmount,tvNumDependance,
             tvGross,tvBHXH, tvBHYT, tvBHTN, tvTNTT,tvFinalPersional, tvFinalDependance,tvleaveMinus, tvTNCT, tvTTNCN, tvTNST,tvAllowanceContract,tvAllowanceDepartment, tvOTPlus, tvNet,
-            tvGrossComp, tvXHComp,tvYtComp,tvTNComp, tvToatlComp , tvxhCompPer, tvytCompPer, tvtnCompPer ;
+            tvGrossComp, tvXHComp,tvYtComp,tvTNComp, tvToatlComp , tvxhCompPer, tvytCompPer, tvtnCompPer , tvMt, tvMtHour ;
     List<DefaultModel> defaultModel = new ArrayList<>();
+    private TableAdapter adapter;
+    private List<String[]> tableData;
+
+    RecyclerView recyclerView ;
     String id = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +122,21 @@ public class PayslipDetailActivity extends AppCompatActivity {
         tvBankAccount= findViewById(R.id.detail_payslip_Bankaccount);
         tvBankaccuntName= findViewById(R.id.detail_payslip_BankaccountName);
         tvFinalSalary= findViewById(R.id.detail_payslip_finalSalary);
+        tvMt= findViewById(R.id.detail_payslip_mt);
+        tvMtHour= findViewById(R.id.detail_payslip_mtHour);
 
 
+        recyclerView = findViewById(R.id.recyclerView);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider));
+        recyclerView.addItemDecoration(itemDecoration);
+
+        // Tạo dữ liệu cho bảng
+        tableData = new ArrayList<>();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -195,6 +221,22 @@ public class PayslipDetailActivity extends AppCompatActivity {
                         String fromDate = dateFormat.format(payslip.fromTime);
                         String toDate = dateFormat.format(payslip.toTime);
 
+                        tableData.add(new String[]{"Mức Chịu Thuế", "Thuế suất (%)", "Tiền nộp"});
+                        if(payslip.detailTaxes !=null && payslip.detailTaxes.size()>0 ){
+                            for (DetailTaxes detail: payslip.detailTaxes) {
+                                String mucthue = "";
+                                if(detail.muc_chiu_thue_To == 0 ){
+                                    mucthue = "Trên " + convertToFormattedStringINT(detail.muc_chiu_thue_From);
+                                }else{
+                                    mucthue = "Trên " +  convertToFormattedStringINT(detail.muc_chiu_thue_From) + " đến " + convertToFormattedStringINT(detail.muc_chiu_thue_To);
+                                }
+                                tableData.add(new String[]{mucthue, String.valueOf(detail.thue_suat), convertToFormattedStringINT(detail.taxAmount)});
+
+                            }
+                        }
+                        adapter = new TableAdapter(tableData);
+                        recyclerView.setAdapter(adapter);
+
                         //tvDateCal, tvFrom, tvTo, tvSalaryPerHour, tvDefaultHour, tvTotalHour, tvOTHour, tvOTAmount, tvLeave,
                         //tvLeaveAmount,tvNote, tvBankname, tvBankAccount, tvBankaccuntName, tvFinalSalary,
                         tvDateCal.setText(DateCal);
@@ -254,6 +296,10 @@ public class PayslipDetailActivity extends AppCompatActivity {
                         tvytCompPer.setText("BHYT ("+ payslip.bhyT_Comp_Percent+"%):");
                         tvtnCompPer.setText("BHTN ("+ payslip.bhtN_Comp_Percent+"%):");
 
+                        tvMt.setText(String.valueOf(payslip.isMaternity));
+                        tvMtHour.setText(String.valueOf(payslip.maternityHour));
+
+
                     }else if(response.code()==403 || response.code()==401){
                         Intent intent = new Intent(PayslipDetailActivity.this, LoginActivity.class);
                         intent.putExtra("Error", "Phiên đăng nập đã hết hạn! Vui lòng đăng nhập lại!");
@@ -293,5 +339,37 @@ public class PayslipDetailActivity extends AppCompatActivity {
         String formattedString = decimalFormat.format(number);
 
         return formattedString;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.toolbar_logout){
+            logout();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(PayslipDetailActivity.this);
+        builder.setTitle("Đăng xuất");
+        builder.setMessage("Bạn có chắc chắn muốn đăng xuất?");
+        builder.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(PayslipDetailActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+                dataManager.setTempInfor(null);
+                startActivity(new Intent(PayslipDetailActivity.this,LoginActivity.class));
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Đóng dialog nếu người dùng chọn Hủy
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
