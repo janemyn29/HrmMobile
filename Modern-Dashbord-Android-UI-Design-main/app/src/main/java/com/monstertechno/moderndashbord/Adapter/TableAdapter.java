@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.monstertechno.moderndashbord.R;
@@ -32,6 +33,17 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
         holder.textView1.setText(rowData[0]);
         holder.textView2.setText(rowData[1]);
         holder.textView3.setText(rowData[2]);
+
+        if (position == 0) {
+            // Đổi màu cho hàng đầu tiên
+            holder.textView1.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+            holder.textView2.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+            holder.textView3.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.pastel));
+        } else {
+            // Đặt màu mặc định cho các hàng khác
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+        }
     }
 
     @Override

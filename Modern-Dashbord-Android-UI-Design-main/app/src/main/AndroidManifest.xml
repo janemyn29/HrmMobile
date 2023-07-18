@@ -14,13 +14,16 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".AddDependantActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".DependantActivity" />
         <activity
             android:name=".AllowanceActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DependantActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ChangePassActivity"
             android:exported="false"
