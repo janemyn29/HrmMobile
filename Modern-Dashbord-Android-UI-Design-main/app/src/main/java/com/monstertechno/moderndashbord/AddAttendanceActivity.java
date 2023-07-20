@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 import com.monstertechno.moderndashbord.Adapter.AttendanceAdapter;
 import com.monstertechno.moderndashbord.Adapter.PagingScrollListener;
 import com.monstertechno.moderndashbord.Api.ApiService;
@@ -151,19 +152,24 @@ public class AddAttendanceActivity extends AppCompatActivity implements SelectLi
         });
 
     }
-    String temp = "json";
 
     private void GetIp(){
 
-        ApiServiceIp.apiService.GetCurrentAttendance(temp).enqueue(new Callback<IpClass>() {
+        ApiServiceIp.apiService.GetCurrentAttendance().enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<IpClass> call, Response<IpClass> response) {
-                IpClass ipClass = response.body();
-                ip= ipClass.ip;
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Gson gson = new Gson();
+                    IpClass ipInfo = gson.fromJson(response.body().string(), IpClass.class);
+                    ip= ipInfo.ipString;
+                }catch (Exception exception){
+
+                }
+
             }
 
             @Override
-            public void onFailure(Call<IpClass> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });
